@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">JSONParsing</string>
+    <string name="url">https://api.npoint.io/cf9538417f1471375244</string>
+    <string name="result">RESULT</string>
+    <string name="get_api">GET API</string>
+    <string name="dialog_start_game">API Dialog Box</string>
+    <string name="start">START</string>
+    <string name="cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="assessment_options">Assessment Options</string>
+    <string-array name="positions">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assessment_options"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="24dp"/>
+
+
+    <Spinner
+        android:id="@+id/spPositions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"/>
+    <TextView
+        android:id="@+id/tvPositions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="HELLO"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
+
+    <Spinner
+        android:id="@+id/spInterpretations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"/>
+    <TextView
+        android:id="@+id/tvInterpretations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="HELLO"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
+
+    <Spinner
+        android:id="@+id/spSuggestedTreatments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"/>
+    <TextView
+        android:id="@+id/tvSuggestedTreatments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="HELLO"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
+
+</LinearLayout>

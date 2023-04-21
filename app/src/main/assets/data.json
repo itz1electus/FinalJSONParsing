@@ -1,0 +1,72 @@
+{
+  "assessmentOptionsList": [
+    {
+      "interpretations": [],
+      "position": 0,
+      "role": "",
+      "suggestedTreatments": []
+    },
+    {
+      "interpretations": [
+        "",
+        "Negative",
+        "Positive",
+        "Cannot Assess"
+      ],
+      "position": 1,
+      "role": "Nurse/HCW (Primary)",
+      "suggestedTreatments": []
+    },
+    {
+      "interpretations": [
+        "",
+        "Negative",
+        "Positive",
+        "Cannot Assess"
+      ],
+      "position": 2,
+      "role": "MO/RMA",
+      "suggestedTreatments": []
+    },
+    {
+      "interpretations": [
+        "",
+        "Negative",
+        "Positive",
+        "Cannot Assess"
+      ],
+      "position": 3,
+      "role": "Gynac (Verified)",
+      "suggestedTreatments": []
+    },
+    {
+      "interpretations": [
+        "",
+        "Carcinoma",
+        "Probable High Grade Lesion",
+        "Probable Low Grade Lesion",
+        "Benign Condition",
+        "Normal",
+        "Cannot Assess"
+      ],
+      "position": 4,
+      "role": "Expert",
+      "suggestedTreatments": [
+        "",
+        "Biopsy and Further Investigation",
+        "Antibiotics",
+        "Other Medication",
+        "Follow up and Review",
+        "Thermal Ablation",
+        "Cryotherapy",
+        "Conical Excision",
+        "LLETZ",
+        "Hysterectomy",
+        "Chemotherapy",
+        "Radiation"
+      ]
+    }
+  ],
+  "code": 200,
+  "success": true
+}
