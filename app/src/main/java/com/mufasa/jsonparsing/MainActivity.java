@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private final List<String> interpretationsSeparated = new ArrayList<>();
     private final ArrayList<List<String>> suggestedTreatments = new ArrayList<>();
     private final List<String> suggestedTreatmentsSeparated = new ArrayList<>();
+    private SpinAdapter adapter;
+    static NewResponse[] newResponses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int positionRole, long id) {
                     roleView.setText(roles.get(positionRole));
                     interpretationsSeparated.addAll(interpretationsNew.get(positionRole));
+
+                    newResponses = new NewResponse[interpretationsSeparated.size()];
+
+                    newResponses[positionRole] = new NewResponse();
+                    newResponses[positionRole].setAssessmentOptions(interpretationsNew.get(positionRole));
                 }
 
                 @Override
@@ -111,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            ArrayAdapter<String> adapterInterpretations = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, interpretationsSeparated);
-            adapterInterpretations.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerInterpretations.setAdapter(adapterInterpretations);
+            adapter = new SpinAdapter(this, android.R.layout.simple_spinner_item, newResponses);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerInterpretations.setAdapter(adapter);
         }
 
         // Spinner for Suggested Treatments
