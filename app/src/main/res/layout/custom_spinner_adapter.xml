@@ -11,7 +11,7 @@
         tools:text="Mustafa"
         android:layout_marginStart="30dp"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:layout_gravity="center_vertical"
         android:id="@+id/nameTextView"/>
 

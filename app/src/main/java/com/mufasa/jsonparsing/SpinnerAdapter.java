@@ -12,12 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SpinnerAdapter extends ArrayAdapter<AssessmentOptions> {
 
     LayoutInflater layoutInflater;
 
-    public SpinnerAdapter(@NonNull Context context, int resource, @NonNull ArrayList<AssessmentOptions> assessmentOptions) {
+    public SpinnerAdapter(@NonNull Context context, int resource, @NonNull List<AssessmentOptions> assessmentOptions) {
         super(context, resource, assessmentOptions);
         layoutInflater = LayoutInflater.from(context);
     }
@@ -28,7 +29,7 @@ public class SpinnerAdapter extends ArrayAdapter<AssessmentOptions> {
         @SuppressLint("ViewHolder") View rowView = layoutInflater.inflate(R.layout.custom_spinner_adapter, null, true);
         AssessmentOptions rowItem = getItem(position);
         TextView textView = (TextView)rowView.findViewById(R.id.nameTextView);
-        textView.setText((CharSequence) rowItem.getInterpretations());
+        textView.setText(rowItem.getInterpretations().toString());
         return rowView;
     }
 
@@ -40,8 +41,7 @@ public class SpinnerAdapter extends ArrayAdapter<AssessmentOptions> {
 
         AssessmentOptions rowItem = getItem(position);
         TextView textView = (TextView)convertView.findViewById(R.id.nameTextView);
-        textView.setText((CharSequence) rowItem.getInterpretations());
+        textView.setText(rowItem.getInterpretations().toString());
         return convertView;
     }
 }
-

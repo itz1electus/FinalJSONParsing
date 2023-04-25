@@ -1,60 +1,47 @@
 package com.mufasa.jsonparsing;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class SpinAdapter extends ArrayAdapter<NewResponse> {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-    // Your sent context
-    private Context context;
-    // Your custom values for the spinner (User)
-    private Response[] values;
+import java.util.ArrayList;
+import java.util.List;
 
-    public SpinAdapter(Context context, int textViewResourceId,
-                       NewResponse[] responses) {
-        super(context, textViewResourceId, responses);
-        this.context = context;
+public class SpinAdapter extends ArrayAdapter<AssessmentOptions> {
+
+    LayoutInflater layoutInflater;
+
+    public SpinAdapter(@NonNull Context context, int resource, @NonNull List<AssessmentOptions> assessmentOptions) {
+        super(context, resource, assessmentOptions);
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public int getCount(){
-        return values.length;
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        @SuppressLint("ViewHolder") View rowView = layoutInflater.inflate(R.layout.custom_spinner_adapter, null, true);
+        AssessmentOptions rowItem = getItem(position);
+        TextView textView = (TextView)rowView.findViewById(R.id.nameTextView);
+        textView.setText(rowItem.getSuggestedTreatments().toString());
+        return rowView;
     }
 
     @Override
-    public long getItemId(int position){
-        return position;
-    }
+    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
+        if (convertView == null)
+            convertView = layoutInflater.inflate(R.layout.custom_spinner_adapter, parent, false);
 
-    // And the "magic" goes here
-    // This is for the "passive" state of the spinner
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // I created a dynamic TextView here, but you can reference your own  custom layout for each spinner item
-        TextView label = (TextView) super.getView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
-        // Then you can get the current item using the values array (Users array) and the current position
-        // You can NOW reference each method you has created in your bean object (User class)
-        label.setText((CharSequence) values[position].getAssessmentOptionsList().get(position));
-
-        // And finally return your dynamic (or custom) view for each spinner item
-        return label;
-    }
-
-    // And here is when the "chooser" is popped up
-    // Normally is the same view, but you can customize it if you want
-    @Override
-    public View getDropDownView(int position, View convertView,
-                                ViewGroup parent) {
-        TextView label = (TextView) super.getDropDownView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
-        label.setText((CharSequence) values[position].getAssessmentOptionsList().get(position));
-
-        return label;
+        AssessmentOptions rowItem = getItem(position);
+        TextView textView = (TextView)convertView.findViewById(R.id.nameTextView);
+        textView.setText(rowItem.getSuggestedTreatments().toString());
+        return convertView;
     }
 }

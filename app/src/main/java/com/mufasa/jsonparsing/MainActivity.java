@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private String json = null;
     private final List<String> roles = new ArrayList<>();
     private final List<Integer> positions = new ArrayList<>();
-    private final ArrayList<AssessmentOptions> interpretationsNew = new ArrayList<>();
+    private List<AssessmentOptions> interpretations = new ArrayList<>();
     private final List<String> interpretationsSeparated = new ArrayList<>();
     private final ArrayList<List<String>> suggestedTreatments = new ArrayList<>();
     private final List<String> suggestedTreatmentsSeparated = new ArrayList<>();
     private SpinnerAdapter adapter;
+    private SpinAdapter adapter2;
+    int role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +55,10 @@ public class MainActivity extends AppCompatActivity {
             Log.e("TAG", "error: " + ex);
         }
         Response response = gson.fromJson(json, Response.class);
-        List<AssessmentOptions> interpretations = response.getAssessmentOptionsList();
+        interpretations = response.getAssessmentOptionsList();
         for (int i = 0; i < interpretations.size(); i++) {
             positions.add(interpretations.get(i).getPosition());
             roles.add(interpretations.get(i).getRole());
-//            interpretationsNew.add(interpretations.get(i).getInterpretations());
             suggestedTreatments.add(interpretations.get(i).getSuggestedTreatments());
         }
 
@@ -80,8 +82,50 @@ public class MainActivity extends AppCompatActivity {
         if (spinnerPositions != null && positions != null) {
             spinnerPositions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int positionRole, long id) {
+                public void onItemSelected(AdapterView<?> parent1, View view, int positionRole, long id) {
                     roleView.setText(roles.get(positionRole));
+                    role = positionRole;
+                    // Spinner for interpretations
+                    Spinner spinnerInterpretations = dialog.findViewById(R.id.spInterpretations);
+                    TextView interpretationsView = dialog.findViewById(R.id.tvInterpretations);
+                    for (int i = 0; i < interpretations.get((int) parent1.getSelectedItemId()).getInterpretations().size(); i++) {
+                        interpretationsSeparated.add(interpretations.get((int) parent1.getSelectedItemId()).getInterpretations().get(i));
+                    }
+                    ArrayAdapter<List<String>> adapterInterpretations = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, interpretationsSeparated);
+                    spinnerInterpretations.setAdapter(adapterInterpretations);
+                    spinnerInterpretations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent2, View view, int position2, long id) {
+                            interpretationsView.setText(parent2.getItemAtPosition(position2).toString());
+
+                            if (!interpretations.get((int) parent1.getSelectedItemId()).getSuggestedTreatments().toString().equals("[]")) {
+                                // Spinner for Suggested Treatments
+                                Spinner spinnerSuggestedTreatments = dialog.findViewById(R.id.spSuggestedTreatments);
+                                TextView suggestedTreatmentsView = dialog.findViewById(R.id.tvSuggestedTreatments);
+                                spinnerSuggestedTreatments.setVisibility(View.VISIBLE);
+                                for (int i = 0; i < interpretations.get((int) parent1.getSelectedItemId()).getSuggestedTreatments().size(); i++) {
+                                    suggestedTreatmentsSeparated.add(interpretations.get((int) parent1.getSelectedItemId()).getSuggestedTreatments().get(i));
+                                }
+                                ArrayAdapter<List<String>> adapterSuggestedTreatments = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, suggestedTreatmentsSeparated);
+                                spinnerSuggestedTreatments.setAdapter(adapterSuggestedTreatments);
+                                spinnerSuggestedTreatments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        suggestedTreatmentsView.setText(parent.getItemAtPosition(position2).toString());
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
                 @Override
@@ -93,43 +137,6 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<Integer> adapterPositions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, positions);
             adapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerPositions.setAdapter(adapterPositions);
-        }
-
-        // Spinner for interpretations
-        Spinner spinnerInterpretations = dialog.findViewById(R.id.spInterpretations);
-        TextView interpretationsView = dialog.findViewById(R.id.tvInterpretations);
-        adapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, interpretationsNew);
-        spinnerInterpretations.setAdapter(adapter);
-        spinnerInterpretations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                interpretationsView.setText((CharSequence) interpretationsNew.get(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        // Spinner for Suggested Treatments
-        Spinner spinnerSuggestedTreatments = dialog.findViewById(R.id.spSuggestedTreatments);
-        if (spinnerSuggestedTreatments != null && suggestedTreatments != null) {
-            spinnerSuggestedTreatments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(MainActivity.this, "You have selected the following: " + parent.getItemAtPosition(position), Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            ArrayAdapter<List<String>> adapterSuggestedTreatments = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, suggestedTreatments);
-            adapterSuggestedTreatments.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerSuggestedTreatments.setAdapter(adapterSuggestedTreatments);
         }
 
         // Show the dialog box
