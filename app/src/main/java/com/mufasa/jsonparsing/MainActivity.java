@@ -28,11 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private String json = null;
     private final List<String> roles = new ArrayList<>();
     private final List<Integer> positions = new ArrayList<>();
-    private final ArrayList<List<Response>> interpretationsNew = new ArrayList<>();
-    private final List<Response> interpretationsSeparated = new ArrayList<>();
-    private final ArrayList<List<Response>> suggestedTreatments = new ArrayList<>();
-    private final List<Response> suggestedTreatmentsSeparated = new ArrayList<>();
-    private final Responses responses = new Responses();
+    private final ArrayList<List<String>> interpretationsNew = new ArrayList<>();
+    private final List<String> interpretationsSeparated = new ArrayList<>();
+    private final ArrayList<List<String>> suggestedTreatments = new ArrayList<>();
+    private final List<String> suggestedTreatmentsSeparated = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int positionRole, long id) {
                     roleView.setText(roles.get(positionRole));
                     interpretationsSeparated.addAll(interpretationsNew.get(positionRole));
-                    responses.Interpretation(interpretationsSeparated.get(positionRole));
                 }
 
                 @Override
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             spinnerInterpretations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                    interpretationsView.setText(interpretationsSeparated.get(position));
                 }
 
                 @Override
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            SpinnerAdapter adapterInterpretations = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, responses.getAllInterpretations());
+            ArrayAdapter<String> adapterInterpretations = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, interpretationsSeparated);
             adapterInterpretations.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerInterpretations.setAdapter(adapterInterpretations);
         }
@@ -133,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-//            SpinnerAdapter adapterSuggestedTreatments = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, suggestedTreatments.);
-//            adapterSuggestedTreatments.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            spinnerSuggestedTreatments.setAdapter(adapterSuggestedTreatments);
+            ArrayAdapter<List<String>> adapterSuggestedTreatments = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, suggestedTreatments);
+            adapterSuggestedTreatments.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerSuggestedTreatments.setAdapter(adapterSuggestedTreatments);
         }
 
         // Show the dialog box

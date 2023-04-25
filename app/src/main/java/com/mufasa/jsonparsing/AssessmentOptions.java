@@ -10,7 +10,7 @@ public class AssessmentOptions {
 
 	@SerializedName("interpretations")
 	@Expose
-	private List<Response> interpretations;
+	private List<String> interpretations;
 	@SerializedName("position")
 	@Expose
 	private int position;
@@ -19,13 +19,13 @@ public class AssessmentOptions {
 	private String role;
 	@SerializedName("suggestedTreatments")
 	@Expose
-	private List<Response> suggestedTreatments;
+	private List<String> suggestedTreatments;
 
-	public List<Response> getInterpretations() {
+	public List<String> getInterpretations() {
 		return interpretations;
 	}
 
-	public void setInterpretations(List<Response> interpretations) {
+	public void setInterpretations(List<String> interpretations) {
 		this.interpretations = interpretations;
 	}
 
@@ -45,11 +45,11 @@ public class AssessmentOptions {
 		this.role = role;
 	}
 
-	public List<Response> getSuggestedTreatments() {
+	public List<String> getSuggestedTreatments() {
 		return suggestedTreatments;
 	}
 
-	public void setSuggestedTreatments(List<Response> suggestedTreatments) {
+	public void setSuggestedTreatments(List<String> suggestedTreatments) {
 		this.suggestedTreatments = suggestedTreatments;
 	}
 

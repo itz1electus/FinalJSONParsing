@@ -1,5 +1,6 @@
 package com.mufasa.jsonparsing;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,7 @@ public class SpinnerAdapter extends ArrayAdapter<Response> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        View rowView = layoutInflater.inflate(R.layout.custom_spinner_adapter, null, true);
+        @SuppressLint("ViewHolder") View rowView = layoutInflater.inflate(R.layout.custom_spinner_adapter, null, true);
         Response response = getItem(position);
         TextView textView = (TextView)rowView.findViewById(R.id.nameTextView);
         textView.setText((CharSequence) response.getAssessmentOptionsList());
