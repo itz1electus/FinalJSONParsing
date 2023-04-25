@@ -28,12 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private String json = null;
     private final List<String> roles = new ArrayList<>();
     private final List<Integer> positions = new ArrayList<>();
-    private final ArrayList<List<String>> interpretationsNew = new ArrayList<>();
+    private final ArrayList<AssessmentOptions> interpretationsNew = new ArrayList<>();
     private final List<String> interpretationsSeparated = new ArrayList<>();
     private final ArrayList<List<String>> suggestedTreatments = new ArrayList<>();
     private final List<String> suggestedTreatmentsSeparated = new ArrayList<>();
-    private SpinAdapter adapter;
-    static NewResponse[] newResponses;
+    private SpinnerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < interpretations.size(); i++) {
             positions.add(interpretations.get(i).getPosition());
             roles.add(interpretations.get(i).getRole());
-            interpretationsNew.add(interpretations.get(i).getInterpretations());
+//            interpretationsNew.add(interpretations.get(i).getInterpretations());
             suggestedTreatments.add(interpretations.get(i).getSuggestedTreatments());
         }
 
@@ -83,12 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int positionRole, long id) {
                     roleView.setText(roles.get(positionRole));
-                    interpretationsSeparated.addAll(interpretationsNew.get(positionRole));
-
-                    newResponses = new NewResponse[interpretationsSeparated.size()];
-
-                    newResponses[positionRole] = new NewResponse();
-                    newResponses[positionRole].setAssessmentOptions(interpretationsNew.get(positionRole));
                 }
 
                 @Override
@@ -105,23 +98,19 @@ public class MainActivity extends AppCompatActivity {
         // Spinner for interpretations
         Spinner spinnerInterpretations = dialog.findViewById(R.id.spInterpretations);
         TextView interpretationsView = dialog.findViewById(R.id.tvInterpretations);
-        if (spinnerInterpretations != null) {
-            spinnerInterpretations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    interpretationsView.setText(interpretationsSeparated.get(position));
-                }
+        adapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, interpretationsNew);
+        spinnerInterpretations.setAdapter(adapter);
+        spinnerInterpretations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                interpretationsView.setText((CharSequence) interpretationsNew.get(position));
+            }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                }
-            });
-
-            adapter = new SpinAdapter(this, android.R.layout.simple_spinner_item, newResponses);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerInterpretations.setAdapter(adapter);
-        }
+            }
+        });
 
         // Spinner for Suggested Treatments
         Spinner spinnerSuggestedTreatments = dialog.findViewById(R.id.spSuggestedTreatments);
