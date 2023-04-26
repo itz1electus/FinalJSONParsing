@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            ArrayAdapter<Integer> adapterPositions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, positions);
+            ArrayAdapter<String> adapterPositions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roles);
             adapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerPositions.setAdapter(adapterPositions);
         }
