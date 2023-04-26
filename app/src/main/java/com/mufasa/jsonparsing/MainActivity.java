@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private final List<String> interpretationsSeparated = new ArrayList<>();
     private final ArrayList<List<String>> suggestedTreatments = new ArrayList<>();
     private final List<String> suggestedTreatmentsSeparated = new ArrayList<>();
-    private SpinnerAdapter adapter;
-    private SpinAdapter adapter2;
+    private Spinner spinnerInterpretations;
+    private Spinner spinnerSuggestedTreatments;
+    private TextView suggestedTreatmentsView;
     int role;
 
     @Override
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             roles.add(interpretations.get(i).getRole());
             suggestedTreatments.add(interpretations.get(i).getSuggestedTreatments());
         }
+        System.out.println(interpretations.get(4).getSuggestedTreatments().get(2));
 
         openDialogBoxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,10 +85,16 @@ public class MainActivity extends AppCompatActivity {
             spinnerPositions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent1, View view, int positionRole, long id) {
+                    suggestedTreatmentsSeparated.clear();
+                    interpretationsSeparated.clear();
+                    if (spinnerSuggestedTreatments != null && suggestedTreatmentsView != null) {
+                        suggestedTreatmentsView.setText("");
+                        spinnerSuggestedTreatments.setVisibility(View.INVISIBLE);
+                    }
                     roleView.setText(roles.get(positionRole));
                     role = positionRole;
                     // Spinner for interpretations
-                    Spinner spinnerInterpretations = dialog.findViewById(R.id.spInterpretations);
+                    spinnerInterpretations = dialog.findViewById(R.id.spInterpretations);
                     TextView interpretationsView = dialog.findViewById(R.id.tvInterpretations);
                     for (int i = 0; i < interpretations.get((int) parent1.getSelectedItemId()).getInterpretations().size(); i++) {
                         interpretationsSeparated.add(interpretations.get((int) parent1.getSelectedItemId()).getInterpretations().get(i));
@@ -97,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent2, View view, int position2, long id) {
                             interpretationsView.setText(parent2.getItemAtPosition(position2).toString());
-
+                            suggestedTreatmentsSeparated.clear();
                             if (!interpretations.get((int) parent1.getSelectedItemId()).getSuggestedTreatments().toString().equals("[]")) {
                                 // Spinner for Suggested Treatments
-                                Spinner spinnerSuggestedTreatments = dialog.findViewById(R.id.spSuggestedTreatments);
-                                TextView suggestedTreatmentsView = dialog.findViewById(R.id.tvSuggestedTreatments);
+                                spinnerSuggestedTreatments = dialog.findViewById(R.id.spSuggestedTreatments);
+                                suggestedTreatmentsView = dialog.findViewById(R.id.tvSuggestedTreatments);
                                 spinnerSuggestedTreatments.setVisibility(View.VISIBLE);
                                 for (int i = 0; i < interpretations.get((int) parent1.getSelectedItemId()).getSuggestedTreatments().size(); i++) {
                                     suggestedTreatmentsSeparated.add(interpretations.get((int) parent1.getSelectedItemId()).getSuggestedTreatments().get(i));
